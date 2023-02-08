@@ -200,7 +200,8 @@
               "browserTarget": "admin:build:production"
             },
             "development": {
-              "browserTarget": "admin:build:development"
+              "browserTarget": "admin:build:development",
+              "port": 4201
             }
           },
           "defaultConfiguration": "development"
@@ -337,7 +338,8 @@
               "browserTarget": "lp:build:production"
             },
             "development": {
-              "browserTarget": "lp:build:development"
+              "browserTarget": "lp:build:development",
+              "port": 4202
             }
           },
           "defaultConfiguration": "development"
