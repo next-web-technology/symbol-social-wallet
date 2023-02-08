@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "symbol-social-wallet-test",
+    "testnet": "symbol-social-wallet-test",
+    "mainnet": "symbol-social-wallet"
+  },
+  "targets": {},
+  "etags": {}
+}
