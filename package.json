@@ -60,8 +60,10 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "5.48.1",
+    "cypress": "latest",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",
+    "firebase-tools": "^11.22.0",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -69,7 +71,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "prettier": "^2.8.3",
-    "typescript": "~4.9.4",
-    "cypress": "latest"
+    "typescript": "~4.9.4"
   }
 }

@@ -1,0 +1,36 @@
+{
+  "projects": {
+    "default": "symbol-social-wallet-test",
+    "testnet": "symbol-social-wallet-test",
+    "mainnet": "symbol-social-wallet"
+  },
+  "targets": {
+    "symbol-social-wallet-test": {
+      "hosting": {
+        "web": [
+          "symbol-social-wallet-test"
+        ],
+        "admin": [
+          "admin-symbol-social-wallet-test"
+        ],
+        "lp": [
+          "lp-symbol-social-wallet-test"
+        ]
+      }
+    },
+    "symbol-social-wallet": {
+      "hosting": {
+        "web": [
+          "symbol-social-wallet"
+        ],
+        "admin": [
+          "admin-symbol-social-wallet"
+        ],
+        "lp": [
+          "lp-symbol-social-wallet"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
