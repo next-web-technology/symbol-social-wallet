@@ -29,6 +29,7 @@
     "build:lp": "ng build --project=lp --configuration=production",
     "watch:lp": "ng build --project=lp --watch --configuration development",
     "test:lp": "ng test --project=lp",
+    "test:lp:ci": "ng test --project=lp --browsers=ChromeHeadless --no-watch --no-progress --code-coverage",
     "e2e:lp": "ng run lp:cypress-open",
     "e2e:lp:ci": "ng run lp:cypress-run",
     "lint:lp": "ng lint --project=lp"
