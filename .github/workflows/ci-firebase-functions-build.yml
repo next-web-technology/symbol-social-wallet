@@ -1,0 +1,27 @@
+name: CI Firebase Functions Build
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  firebase-functions-build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          cache-dependency-path: |
+            ./functions/package-lock.json
+      - run: npm ci
+        working-directory: ./functions
+      - run: npm run build
+        working-directory: ./functions
