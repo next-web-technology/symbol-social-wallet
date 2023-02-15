@@ -148,6 +148,9 @@ jobs:
     strategy:
       matrix:
         node-version: [16.x]
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -164,6 +167,11 @@ jobs:
       - run: npm run build:lp
       - run: npm ci
         working-directory: ./functions
+      - id: auth
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: projects/symbol-social-wallet/locations/global/workloadIdentityPools/github-actions/providers/github
+          service_account: github-actions@symbol-social-wallet.iam.gserviceaccount.com
       - run: npm run build
         working-directory: ./functions
-      - run: npx firebase deploy --project=mainnet --token=${{ secrets.FIREBASE_TOKEN }} --force
+      - run: npx firebase deploy --project=mainnet --force
