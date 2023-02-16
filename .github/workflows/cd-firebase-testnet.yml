@@ -173,8 +173,8 @@ jobs:
       - id: auth
         uses: 'google-github-actions/auth@v1'
         with:
-          workload_identity_provider: projects/symbol-social-wallet-test/locations/global/workloadIdentityPools/github-actions/providers/github
-          service_account: github-actions@symbol-social-wallet-test.iam.gserviceaccount.com
+          workload_identity_provider: projects/symbol-social-wallet-test/locations/global/workloadIdentityPools/github-actions-service-account/providers/github
+          service_account: github-actions-service-account@symbol-social-wallet-test.iam.gserviceaccount.com
       - run: npm run build
         working-directory: ./functions
       - run: npx firebase deploy --project=testnet --force
