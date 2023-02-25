@@ -177,4 +177,4 @@ jobs:
         with:
           workload_identity_provider: projects/46488998501/locations/global/workloadIdentityPools/github-actions/providers/github
           service_account: github-actions-service-account@symbol-social-wallet-test.iam.gserviceaccount.com
-      - run: npx firebase deploy --project=testnet --force
+      - run: npx firebase deploy --project=testnet --force --debug
