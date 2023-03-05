@@ -1,22 +1,19 @@
-import { ComponentFixture } from '@angular/core/testing';
-import { HomeComponent } from './home.component';
 import { render, screen } from '@testing-library/angular';
+import { HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
 
   beforeEach(async () => {
-    const renderResult = await render(HomeComponent, {});
-    fixture = renderResult.fixture;
+    const { fixture } = await render(HomeComponent);
     component = fixture.componentInstance;
   });
 
-  it('should create the app', () => {
+  it('should create the app', async () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render title', () => {
-    expect(screen.getByText('home works!')).toBeTruthy();
+  it('should render title', async () => {
+    expect(screen.getAllByText('home works!')).toBeTruthy();
   });
 });
