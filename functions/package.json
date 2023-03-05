@@ -5,6 +5,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
+    "emulate": "firebase emulators:start --only auth,firestore,storage,pubsub,functions --import=emulator --export-on-exit",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "test": "jest",

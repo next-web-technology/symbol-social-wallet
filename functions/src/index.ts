@@ -1,9 +1,5 @@
-import * as functions from 'firebase-functions';
+import { exportFunctionsModule } from './utils/firebase/deploy';
 
-// // Start writing functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info('Hello logs!', { structuredData: true });
-  response.send('Hello from Firebase!');
-});
+const domains = ['v1'];
+
+domains.forEach((domain) => exportFunctionsModule([domain], exports));
