@@ -48,3 +48,10 @@ cypress/screenshots/*
 # Firebase
 .firebase/*
 *.log
+
+# Environment
+environment.ts
+environment.development.ts
+environment.production.ts
+environment.mainnet-development.ts
+environment.mainnet-production.ts

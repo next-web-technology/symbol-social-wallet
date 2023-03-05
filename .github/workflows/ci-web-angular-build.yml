@@ -8,6 +8,9 @@ jobs:
   web-angular-build:
     runs-on: ubuntu-latest
 
+    environment:
+      name: testnet
+
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -21,5 +24,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
+      - name: Create environment file
+        run: mkdir -p ./projects/web/src/environments
+        run: touch ./projects/web/src/environments/environment.production.ts
+        env:
+        ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./src/environments/environment.production.ts
       - run: npm ci
       - run: npm run build:web
+      - run: rm ./src/environments/environment.production.ts
