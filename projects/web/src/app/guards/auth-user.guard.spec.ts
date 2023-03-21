@@ -28,10 +28,11 @@ describe('AuthUserGuard', () => {
     const user$ = guard.canActivate(route) as Observable<boolean>;
 
     // Assert
-    user$.subscribe((user) => {
+    const subscription = user$.subscribe((user) => {
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
       expect(user).toBe(false);
     });
+    subscription.unsubscribe;
   });
 
   it('should navigate to root if userId is not specified', async () => {
@@ -44,10 +45,11 @@ describe('AuthUserGuard', () => {
     const user$ = guard.canActivate(route) as Observable<boolean>;
 
     // Assert
-    user$.subscribe((user) => {
+    const subscription = user$.subscribe((user) => {
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
       expect(user).toBe(false);
     });
+    subscription.unsubscribe;
   });
 
   it('should navigate to root if userId does not match', () => {
@@ -59,10 +61,11 @@ describe('AuthUserGuard', () => {
 
     const user$ = guard.canActivate(route) as Observable<boolean>;
 
-    user$.subscribe((user) => {
+    const subscription = user$.subscribe((user) => {
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
       expect(user).toBe(false);
     });
+    subscription.unsubscribe;
   });
 
   it('should stay if user is authenticated', async () => {
@@ -76,9 +79,10 @@ describe('AuthUserGuard', () => {
     const user$ = guard.canActivate(route) as Observable<boolean>;
 
     // Assert
-    user$.subscribe((user) => {
-      expect(routerSpy.navigate).toBeNull;
+    const subscription = user$.subscribe((user) => {
+      expect(routerSpy.navigate).not.toHaveBeenCalled;
       expect(user).toBe(true);
     });
+    subscription.unsubscribe;
   });
 });

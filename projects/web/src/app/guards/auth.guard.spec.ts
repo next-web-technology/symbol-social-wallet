@@ -27,10 +27,11 @@ xdescribe('AuthGuard', () => {
     const user$ = guard.canActivate() as Observable<boolean>;
 
     // Assert
-    user$.subscribe((user) => {
+    const subscription = user$.subscribe((user) => {
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
       expect(user).toBe(false);
     });
+    subscription.unsubscribe;
   });
 
   it('should stay if user is authenticated', async () => {
@@ -42,9 +43,10 @@ xdescribe('AuthGuard', () => {
     const user$ = guard.canActivate() as Observable<boolean>;
 
     // Assert
-    user$.subscribe((user) => {
-      expect(routerSpy.navigate).toBeNull;
+    const subscription = user$.subscribe((user) => {
+      expect(routerSpy.navigate).not.toHaveBeenCalled;
       expect(user).toBe(true);
     });
+    subscription.unsubscribe;
   });
 });

@@ -125,9 +125,10 @@ describe('AuthService', () => {
       const result$ = service.fetchAuthState$();
 
       // Assert
-      result$.subscribe((result) => {
+      const subscription = result$.subscribe((result) => {
         expect(result).toEqual(expectedUser);
       });
+      subscription.unsubscribe;
     });
 
     it('should return an Observable of null', () => {
@@ -138,9 +139,10 @@ describe('AuthService', () => {
       const auth$ = service.fetchAuthState$();
 
       // Assert
-      auth$.subscribe((result) => {
+      const subscription = auth$.subscribe((result) => {
         expect(result).toBeNull;
       });
+      subscription.unsubscribe;
     });
   });
 });

@@ -29,8 +29,8 @@ export class SignOutButtonComponent {
   async signOut(): Promise<void> {
     const subscription = this.authService.fetchAuthState$().subscribe((authUser) => {
       if (authUser === null) {
-        subscription.unsubscribe();
         this.router.navigate(['/']);
+        subscription.unsubscribe();
       }
     });
     await this.authService.signOut();

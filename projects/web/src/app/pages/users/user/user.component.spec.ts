@@ -77,9 +77,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toBeNull();
       });
+      subscription.unsubscribe;
     });
 
     it('should be Observable undefined with undefined userId', async () => {
@@ -90,9 +91,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toBeUndefined();
       });
+      subscription.unsubscribe;
     });
 
     it('should be Observable undefined with "" userId', async () => {
@@ -103,9 +105,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toBeUndefined();
       });
+      subscription.unsubscribe;
     });
 
     it('should be Observable google User with google userId', async () => {
@@ -116,9 +119,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toEqual(renderPatterns[3].user);
       });
+      subscription.unsubscribe;
     });
 
     it('should be Observable twitter User with twitter userId', async () => {
@@ -129,9 +133,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toEqual(renderPatterns[4].user);
       });
+      subscription.unsubscribe;
     });
 
     it('should be Observable github User with github userId', async () => {
@@ -142,9 +147,10 @@ describe('PageUserComponent', () => {
       component = fixture.componentInstance;
 
       // Assert
-      component.user$.subscribe((user) => {
+      const subscription = component.user$.subscribe((user) => {
         expect(user).toEqual(renderPatterns[5].user);
       });
+      subscription.unsubscribe;
     });
   });
 });

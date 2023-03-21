@@ -103,9 +103,10 @@ describe('UserService', () => {
       const user$ = service.fetchUser$(userId);
 
       // Assertion
-      user$.subscribe((user) => {
+      const subscription = user$.subscribe((user) => {
         expect(user).toEqual(expectedUser);
       });
+      subscription.unsubscribe;
     });
 
     it('should return Observable twitter User with twitter User id', () => {
@@ -118,9 +119,10 @@ describe('UserService', () => {
       const user$ = service.fetchUser$(userId);
 
       // Assertion
-      user$.subscribe((user) => {
+      const subscription = user$.subscribe((user) => {
         expect(user).toEqual(expectedUser);
       });
+      subscription.unsubscribe;
     });
 
     it('should return Observable github User with github User id', () => {
@@ -133,9 +135,10 @@ describe('UserService', () => {
       const user$ = service.fetchUser$(userId);
 
       // Assertion
-      user$.subscribe((user) => {
+      const subscription = user$.subscribe((user) => {
         expect(user).toEqual(expectedUser);
       });
+      subscription.unsubscribe;
     });
   });
 

@@ -1,22 +1,75 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture } from '@angular/core/testing';
+import { AuthService } from '../../../services/auth/auth.service';
+import { render, screen, RenderResult, fireEvent } from '@testing-library/angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SignOutButtonComponent } from './sign-out-button.component';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { createRandomUser } from '../../../services/auth/auth.mock';
 
-xdescribe('SignOutButtonComponent', () => {
-  let component: SignOutButtonComponent;
+describe('SignOutButtonComponent', () => {
+  let renderResult: RenderResult<SignOutButtonComponent>;
   let fixture: ComponentFixture<SignOutButtonComponent>;
+  let component: SignOutButtonComponent;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SignOutButtonComponent],
-    }).compileComponents();
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['signOut', 'fetchAuthState$']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
-    fixture = TestBed.createComponent(SignOutButtonComponent);
+    renderResult = await render(SignOutButtonComponent, {
+      imports: [FontAwesomeModule],
+      providers: [
+        { provide: AuthService, useValue: authServiceSpy },
+        { provide: Router, useValue: routerSpy },
+      ],
+      componentProperties: { labelText: 'Sign out' },
+    });
+    fixture = renderResult.fixture;
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render the label text', () => {
+    // Arrange
+    const labelText = 'test';
+    component.labelText = labelText;
+
+    // Act
+    fixture.autoDetectChanges();
+
+    // Assert
+    expect(screen.getByText(labelText)).toBeTruthy();
+  });
+
+  it('should call signOut method when the button is clicked', async () => {
+    // Arrange
+    const button = renderResult.getByText('Sign out');
+    const expectedUser = createRandomUser();
+    authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
+
+    // Act
+    await fireEvent.click(button);
+
+    // Assert
+    expect(authServiceSpy.signOut).toHaveBeenCalled();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
+  });
+
+  it('should navigate to route when authUser is null', async () => {
+    // Arrange
+    const button = renderResult.getByText('Sign out');
+    authServiceSpy.fetchAuthState$.and.returnValue(of(null));
+
+    // Act
+    await fireEvent.click(button);
+
+    // Assert
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
   });
 });
