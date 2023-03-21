@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { UserInfrastructureService } from './user-infrastructure.service';
 import {
@@ -15,25 +14,15 @@ describe('UserService', () => {
   let service: UserService;
   let userInfrastructureServiceSpy: jasmine.SpyObj<UserInfrastructureService>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: UserInfrastructureService,
-          useValue: jasmine.createSpyObj('UserInfrastructureService', [
-            'createUser',
-            'fetchUser$',
-            'fetchUser',
-            'updateUser',
-            'deleteUser',
-          ]),
-        },
-      ],
-    });
-    service = TestBed.inject(UserService);
-    userInfrastructureServiceSpy = TestBed.inject(
-      UserInfrastructureService
-    ) as jasmine.SpyObj<UserInfrastructureService>;
+  beforeEach(async () => {
+    userInfrastructureServiceSpy = jasmine.createSpyObj('UserInfrastructureService', [
+      'createUser',
+      'fetchUser$',
+      'fetchUser',
+      'updateUser',
+      'deleteUser',
+    ]);
+    service = new UserService(userInfrastructureServiceSpy);
   });
 
   it('should be created', () => {
@@ -44,6 +33,7 @@ describe('UserService', () => {
     it('should call UserInfrastructureService createUser', () => {
       // Arrange
       const baseUser: BaseUser = createRandomBaseUser('google');
+      userInfrastructureServiceSpy.createUser.and.returnValue(Promise.resolve(convertBaseUserToUser(baseUser)));
 
       // Act
       service.createUser(baseUser);

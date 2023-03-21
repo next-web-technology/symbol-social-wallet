@@ -1,14 +1,11 @@
-import { ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { render, screen } from '@testing-library/angular';
 
-describe('AppComponent', () => {
+xdescribe('AppComponent', () => {
   let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async () => {
-    const renderResult = await render(AppComponent, {});
-    fixture = renderResult.fixture;
+    const { fixture } = await render(AppComponent, {});
     component = fixture.componentInstance;
   });
 

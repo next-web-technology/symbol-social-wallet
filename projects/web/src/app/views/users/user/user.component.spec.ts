@@ -15,7 +15,7 @@ const renderPattern = [
   { case: 'github user', id: GITHUB_USER_NORMAL.id, user: GITHUB_USER_NORMAL },
 ];
 
-describe('UserComponent', () => {
+describe('ViewUserComponent', () => {
   let renderResult: RenderResult<ViewUserComponent, ViewUserComponent>;
   let fixture: ComponentFixture<ViewUserComponent>;
   let component: ViewUserComponent;

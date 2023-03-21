@@ -7,7 +7,7 @@ import { User } from '../../../services/user/user.type';
 import { ViewUserComponent } from '../../../views/users/user/user.component';
 
 @Component({
-  selector: 'app-user',
+  selector: 'app-page-user',
   standalone: true,
   imports: [CommonModule, ViewUserComponent],
   providers: [],

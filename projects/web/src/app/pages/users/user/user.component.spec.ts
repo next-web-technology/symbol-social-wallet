@@ -52,7 +52,7 @@ const userComponentRenderHelper = async (renderPattern: {
   });
 };
 
-describe('UserComponent', () => {
+describe('PageUserComponent', () => {
   let component: UserComponent;
 
   for (const renderPattern of renderPatterns) {
@@ -67,17 +67,6 @@ describe('UserComponent', () => {
       expect(component).toBeTruthy();
     });
   }
-
-  it('should create with undefined userId', async () => {
-    // Arrange
-    const { fixture } = await userComponentRenderHelper(renderPatterns[1]);
-
-    // Act
-    component = fixture.componentInstance;
-
-    // Assert
-    expect(component).toBeTruthy();
-  });
 
   describe('user$', () => {
     it('should be Observable null with null userId', async () => {
