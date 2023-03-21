@@ -1,16 +1,84 @@
-import { TestBed } from '@angular/core/testing';
-
 import { AuthUserGuard } from './auth-user.guard';
+import { AuthService } from '../services/auth/auth.service';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { of, Observable } from 'rxjs';
+import { createRandomUser } from '../services/auth/auth.mock';
 
-xdescribe('AuthUserGuard', () => {
+describe('AuthUserGuard', () => {
   let guard: AuthUserGuard;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(AuthUserGuard);
+  beforeEach(async () => {
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['fetchAuthState$']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    guard = new AuthUserGuard(authServiceSpy, routerSpy);
   });
 
   it('should be created', () => {
     expect(guard).toBeTruthy();
+  });
+
+  it('should navigate to root if user is not authenticated', async () => {
+    // Arrange
+    authServiceSpy.fetchAuthState$.and.returnValue(of(null));
+    const route = { paramMap: { get: () => 'test' } } as unknown as ActivatedRouteSnapshot;
+
+    // Act
+    const user$ = guard.canActivate(route) as Observable<boolean>;
+
+    // Assert
+    user$.subscribe((user) => {
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+      expect(user).toBe(false);
+    });
+  });
+
+  it('should navigate to root if userId is not specified', async () => {
+    // Arrange
+    const expectedUser = createRandomUser();
+    authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
+    const route = { paramMap: { get: () => null } } as unknown as ActivatedRouteSnapshot;
+
+    // Act
+    const user$ = guard.canActivate(route) as Observable<boolean>;
+
+    // Assert
+    user$.subscribe((user) => {
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+      expect(user).toBe(false);
+    });
+  });
+
+  it('should navigate to root if userId does not match', () => {
+    // Arrange
+    const expectedUser = createRandomUser();
+    authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
+
+    const route = { paramMap: { get: () => '123' } } as unknown as ActivatedRouteSnapshot;
+
+    const user$ = guard.canActivate(route) as Observable<boolean>;
+
+    user$.subscribe((user) => {
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+      expect(user).toBe(false);
+    });
+  });
+
+  it('should stay if user is authenticated', async () => {
+    // Arrange
+    const expectedUser = createRandomUser();
+    const expectedUserId = expectedUser.uid;
+    authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
+    const route = { paramMap: { get: () => expectedUserId } } as unknown as ActivatedRouteSnapshot;
+
+    // Act
+    const user$ = guard.canActivate(route) as Observable<boolean>;
+
+    // Assert
+    user$.subscribe((user) => {
+      expect(routerSpy.navigate).toBeNull;
+      expect(user).toBe(true);
+    });
   });
 });
