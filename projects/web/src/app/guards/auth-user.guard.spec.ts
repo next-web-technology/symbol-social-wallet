@@ -2,7 +2,7 @@ import { AuthUserGuard } from './auth-user.guard';
 import { AuthService } from '../services/auth/auth.service';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { createRandomUser } from '../services/auth/auth.mock';
+import { createRandomAuthUser } from '../services/auth/auth.mock';
 
 describe('AuthUserGuard', () => {
   let guard: AuthUserGuard;
@@ -37,7 +37,7 @@ describe('AuthUserGuard', () => {
 
   it('should navigate to root if userId is not specified', async () => {
     // Arrange
-    const expectedUser = createRandomUser();
+    const expectedUser = createRandomAuthUser();
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
     const route = { paramMap: { get: () => null } } as unknown as ActivatedRouteSnapshot;
 
@@ -54,7 +54,7 @@ describe('AuthUserGuard', () => {
 
   it('should navigate to root if userId does not match', () => {
     // Arrange
-    const expectedUser = createRandomUser();
+    const expectedUser = createRandomAuthUser();
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
     const route = { paramMap: { get: () => '123' } } as unknown as ActivatedRouteSnapshot;
@@ -70,7 +70,7 @@ describe('AuthUserGuard', () => {
 
   it('should stay if user is authenticated', async () => {
     // Arrange
-    const expectedUser = createRandomUser();
+    const expectedUser = createRandomAuthUser();
     const expectedUserId = expectedUser.uid;
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
     const route = { paramMap: { get: () => expectedUserId } } as unknown as ActivatedRouteSnapshot;

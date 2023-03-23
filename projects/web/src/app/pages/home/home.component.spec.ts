@@ -2,7 +2,7 @@ import { HomeComponent } from './home.component';
 import { render } from '@testing-library/angular';
 import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { UserCredential } from 'firebase/auth';
+import { createRandomAuthUserCredential } from '../../services/auth/auth.mock';
 
 let authServiceSpy: jasmine.SpyObj<AuthService>;
 let routerSpy: jasmine.SpyObj<Router>;
@@ -36,19 +36,15 @@ describe('PageHomeComponent', () => {
 
   it('should navigate to user page if user credential exists', async () => {
     // Arrange
-    authServiceSpy.getRedirectResult.and.returnValue(
-      Promise.resolve({
-        user: {
-          uid: '123',
-        },
-      } as UserCredential)
-    );
+    const expectedUser = createRandomAuthUserCredential();
+    const expectedUserId = expectedUser.user.uid;
+    authServiceSpy.getRedirectResult.and.returnValue(Promise.resolve(expectedUser));
 
     // Act
     await homeComponentRenderHelper();
 
     // Assert
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['users', '123']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['users', expectedUserId]);
   });
 
   it('should not navigate if user credential is null', async () => {

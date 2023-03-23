@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SignOutButtonComponent } from './sign-out-button.component';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { createRandomUser } from '../../../services/auth/auth.mock';
+import { createRandomAuthUser } from '../../../services/auth/auth.mock';
 
 describe('SignOutButtonComponent', () => {
   let renderResult: RenderResult<SignOutButtonComponent>;
@@ -50,7 +50,7 @@ describe('SignOutButtonComponent', () => {
   it('should call signOut method when the button is clicked', async () => {
     // Arrange
     const button = renderResult.getByText('Sign out');
-    const expectedUser = createRandomUser();
+    const expectedUser = createRandomAuthUser();
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
     // Act

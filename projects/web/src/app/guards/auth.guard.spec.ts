@@ -1,10 +1,10 @@
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { createRandomUser } from '../services/auth/auth.mock';
+import { createRandomAuthUser } from '../services/auth/auth.mock';
 import { AuthGuard } from './auth.guard';
 
-xdescribe('AuthGuard', () => {
+describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
   let routerSpy: jasmine.SpyObj<Router>;
@@ -36,7 +36,7 @@ xdescribe('AuthGuard', () => {
 
   it('should stay if user is authenticated', async () => {
     // Arrange
-    const expectedUser = createRandomUser();
+    const expectedUser = createRandomAuthUser();
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
     // Act

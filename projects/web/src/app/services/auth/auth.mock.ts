@@ -4,7 +4,7 @@ import { UserInfo, User } from 'firebase/auth';
 
 faker.setLocale('ja');
 
-export const createRandomUserInfo = (): UserInfo => {
+export const createRandomAuthUserInfo = (): UserInfo => {
   return {
     displayName: faker.name.fullName(),
     email: faker.internet.email(),
@@ -15,7 +15,7 @@ export const createRandomUserInfo = (): UserInfo => {
   };
 };
 
-export const createRandomUser = (): User => {
+export const createRandomAuthUser = (): User => {
   return {
     displayName: faker.name.fullName(),
     email: faker.internet.email(),
@@ -29,7 +29,7 @@ export const createRandomUser = (): User => {
       creationTime: faker.date.past().toString(),
       lastSignInTime: faker.date.past().toString(),
     },
-    providerData: [createRandomUserInfo(), createRandomUserInfo()],
+    providerData: [createRandomAuthUserInfo(), createRandomAuthUserInfo()],
     refreshToken: faker.random.word(),
     tenantId: faker.random.word(),
     delete: function (): Promise<void> {
@@ -50,9 +50,9 @@ export const createRandomUser = (): User => {
   };
 };
 
-export const createRandomUserCredential = (): UserCredential => {
+export const createRandomAuthUserCredential = (): UserCredential => {
   return {
-    user: createRandomUser(),
+    user: createRandomAuthUser(),
     providerId: faker.random.word(),
     operationType: 'signIn',
   };

@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
 import { AuthInfrastructureService } from './auth-infrastructure.service';
 import { of } from 'rxjs';
-import { createRandomUserCredential, createRandomUser } from './auth.mock';
+import { createRandomAuthUserCredential, createRandomAuthUser } from './auth.mock';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -54,7 +54,7 @@ describe('AuthService', () => {
 
     it('should return a Promise of UserCredential | null', async () => {
       // Arrange
-      const expectedUserCredential = createRandomUserCredential();
+      const expectedUserCredential = createRandomAuthUserCredential();
       authInfrastructureServiceSpy.getRedirectResult.and.returnValue(Promise.resolve(expectedUserCredential));
 
       // Act
@@ -118,7 +118,7 @@ describe('AuthService', () => {
 
     it('should return an Observable of User', () => {
       // Arrange
-      const expectedUser = createRandomUser();
+      const expectedUser = createRandomAuthUser();
       authInfrastructureServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
       // Act
