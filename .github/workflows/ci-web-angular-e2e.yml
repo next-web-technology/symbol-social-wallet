@@ -8,9 +8,6 @@ jobs:
   web-angular-e2e:
     runs-on: ubuntu-latest
 
-    environment:
-      name: testnet
-
     strategy:
       matrix:
         node-version: [16.x, 18.x]
