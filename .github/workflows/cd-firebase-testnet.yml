@@ -164,12 +164,16 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             ./functions/package-lock.json
-      - name: Create environment file
+
+      - name: Create environment file's directory
         run: mkdir -p ./projects/web/src/environments
+      - name: Create empty environment file
         run: touch ./projects/web/src/environments/environment.production.ts
+      - name: Restore environment file content from Environment secrets
         env:
-        ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.production.ts
+
       - run: npm ci
       - run: npm run build:web
       - run: npm run build:admin
@@ -185,4 +189,3 @@ jobs:
           workload_identity_provider: projects/46488998501/locations/global/workloadIdentityPools/github-actions/providers/github
           service_account: github-actions-service-account@symbol-social-wallet-test.iam.gserviceaccount.com
       - run: npx firebase deploy --project=testnet --force --debug
-
