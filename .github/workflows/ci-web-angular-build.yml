@@ -21,5 +21,19 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
+
+      - name: Create environment file's directory
+        run: mkdir -p ./projects/web/src/environments
+      - name: Create empty environment file
+        run: touch ./projects/web/src/environments/environment.ts
+      - name: Create empty environment file for production
+        run: touch ./projects/web/src/environments/environment.production.ts
+      - name: Restore environment file content from secret
+        env:
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_PROD }}
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.production.ts
+
       - run: npm ci
       - run: npm run build:web
+      - name: Delete environment file
+        run: rm ./projects/web/src/environments/environment.production.ts

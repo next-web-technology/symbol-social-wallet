@@ -38,7 +38,7 @@ jobs:
           cache-dependency-path: |
             package-lock.json
       - run: npm ci
-      - run: npm run e2e:web:ci
+      - run: npm run e2e:web:ci:mainnet
 
   admin-angular-test:
     name: Admin Angular Test
@@ -161,10 +161,21 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             ./functions/package-lock.json
+
+      - name: Create environment file's directory
+        run: mkdir -p ./projects/web/src/environments
+      - name: Create empty environment file
+        run: touch ./projects/web/src/environments/environment.mainnet-production.ts
+      - name: Restore environment file content from Environment secrets
+        env:
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.mainnet-production.ts
+
       - run: npm ci
       - run: npm run build:web
       - run: npm run build:admin
       - run: npm run build:lp
+      - run: rm ./projects/web/src/environments/environment.mainnet-production.ts
       - run: npm ci
         working-directory: ./functions
       - id: auth
