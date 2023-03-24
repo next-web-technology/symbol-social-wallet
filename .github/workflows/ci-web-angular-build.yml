@@ -33,7 +33,7 @@ jobs:
         run: touch ./projects/web/src/environments/environment.production.ts
       - name: Restore environment file content from secret
         env:
-          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_PROD }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.production.ts
 
       - run: npm ci
