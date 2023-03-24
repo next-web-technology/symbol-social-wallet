@@ -32,8 +32,8 @@ jobs:
       - name: Restore environment file content from Repository secrets
         env:
           ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
-        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./src/environments/environment.development.ts
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
       - run: npm ci
       - run: npm run e2e:web:ci
-      - run: rm ./src/environments/environment.production.ts
+      - run: rm ./projects/web/src/environments/environment.development.ts
