@@ -168,7 +168,7 @@ jobs:
         run: touch ./projects/web/src/environments/environment.mainnet-production.ts
       - name: Restore environment file content from Environment secrets
         env:
-        ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.mainnet-production.ts
 
       - run: npm ci

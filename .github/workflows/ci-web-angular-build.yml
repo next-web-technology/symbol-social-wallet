@@ -28,6 +28,8 @@ jobs:
       - name: Create environment file's directory
         run: mkdir -p ./projects/web/src/environments
       - name: Create empty environment file
+        run: touch ./projects/web/src/environments/environment.ts
+      - name: Create empty environment file for production
         run: touch ./projects/web/src/environments/environment.production.ts
       - name: Restore environment file content from secret
         env:
