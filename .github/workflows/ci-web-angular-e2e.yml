@@ -9,8 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [16.x, 18.x]
+        containers: [1, 2]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,6 +23,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
+            functions/package-lock.json
 
       - name: Create environment file's directory
         run: mkdir -p ./projects/web/src/environments
@@ -33,6 +36,17 @@ jobs:
           ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
-      - run: npm ci
-      - run: npm run e2e:web:ci
+      - name: Create emulator data directory
+        run: mkdir -p functions/emulator/
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm start:web, npm --prefix ./functions run build:watch, npm --prefix ./functions run emulate
+          wait-on: 'http://localhost:4200, http://localhost:4000'
+          record: true
+          parallel: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: rm ./projects/web/src/environments/environment.development.ts
