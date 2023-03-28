@@ -36,6 +36,10 @@ jobs:
           ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
+      - run: npm ci
+      - run: npm ci
+        working-directory: ./functions
+
       - name: Create emulator data directory
         run: mkdir -p functions/emulator/
       - name: Cypress run
