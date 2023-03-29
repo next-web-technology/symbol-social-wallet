@@ -36,14 +36,13 @@ jobs:
           ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
+      - name: Create emulator data directory
+        run: mkdir -p functions/emulator/
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
           workload_identity_provider: projects/46488998501/locations/global/workloadIdentityPools/github-actions/providers/github
           service_account: github-actions-service-account@symbol-social-wallet-test.iam.gserviceaccount.com
-
-      - name: Create emulator data directory
-        run: mkdir -p functions/emulator/
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
