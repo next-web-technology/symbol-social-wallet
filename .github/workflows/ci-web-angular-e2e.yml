@@ -61,6 +61,7 @@ jobs:
           wait-on: 'http://localhost:4200, http://localhost:4000'
           record: true
           parallel: true
+          config-file: ./projects/web/cypress.config.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
