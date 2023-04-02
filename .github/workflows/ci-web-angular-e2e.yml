@@ -40,9 +40,7 @@ jobs:
           ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
-      - name: Install dependencies on the current directory
         run: npm ci
-      - name: Install dependencies on the functions directory
         run: npm ci
         working-directory: ./functions
 
