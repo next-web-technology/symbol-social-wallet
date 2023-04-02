@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [16.x, 18.x]
+        node-version: [16.x]
         containers: [1, 2]
 
     permissions:
@@ -42,16 +42,10 @@ jobs:
 
       - name: Install dependencies on the current directory
         run: npm ci
-        working-directory: ./functions
       - name: Install dependencies on the functions directory
         run: npm ci
         working-directory: ./functions
 
-      - name: Cache firebase emulators
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/firebase/emulators
-          key: ${{ runner.os }}-firebase-emulators-${{ hashFiles('~/.cache/firebase/emulators/**') }}
       - name: Create emulator data directory
         run: mkdir -p functions/emulator/
       - id: 'auth'
