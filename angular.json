@@ -47,7 +47,7 @@
               "fileReplacements": [
                 {
                   "replace": "projects/web/src/environments/environment.ts",
-                  "with": "projects/web/src/environments/environment.testnet.prod.ts"
+                  "with": "projects/web/src/environments/environment.production.ts"
                 }
               ]
             },
@@ -61,7 +61,42 @@
               "fileReplacements": [
                 {
                   "replace": "projects/web/src/environments/environment.ts",
-                  "with": "projects/web/src/environments/environment.testnet.dev.ts"
+                  "with": "projects/web/src/environments/environment.development.ts"
+                }
+              ]
+            },
+            "mainnet-production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "projects/web/src/environments/environment.ts",
+                  "with": "projects/web/src/environments/environment.mainnet-production.ts"
+                }
+              ]
+            },
+            "mainnet-development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/web/src/environments/environment.ts",
+                  "with": "projects/web/src/environments/environment.mainnet-development.ts"
                 }
               ]
             }
@@ -76,6 +111,12 @@
             },
             "development": {
               "browserTarget": "web:build:development"
+            },
+            "mainnet-production": {
+              "browserTarget": "web:build:mainnet-production"
+            },
+            "mainnet-development": {
+              "browserTarget": "web:build:mainnet-development"
             }
           },
           "defaultConfiguration": "development"

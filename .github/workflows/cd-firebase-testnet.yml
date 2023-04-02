@@ -40,6 +40,18 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
+
+      - name: Create environment file's directory
+        run: mkdir -p ./projects/web/src/environments
+      - name: Create empty environment file
+        run: touch ./projects/web/src/environments/environment.ts
+      - name: Create empty environment file for development
+        run: touch ./projects/web/src/environments/environment.development.ts
+      - name: Restore environment file content from Repository secrets
+        env:
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT_TESTNET_DEV }}
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
+
       - run: npm ci
       - run: npm run e2e:web:ci
 
@@ -164,10 +176,23 @@ jobs:
           cache-dependency-path: |
             package-lock.json
             ./functions/package-lock.json
+
+      - name: Create environment file's directory
+        run: mkdir -p ./projects/web/src/environments
+      - name: Create empty environment file
+        run: touch ./projects/web/src/environments/environment.ts
+      - name: Create empty environment file for production
+        run: touch ./projects/web/src/environments/environment.production.ts
+      - name: Restore environment file content from Environment secrets
+        env:
+          ANGULAR_WEB_ENVIRONMENT: ${{ secrets.ANGULAR_WEB_ENVIRONMENT }}
+        run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.production.ts
+
       - run: npm ci
       - run: npm run build:web
       - run: npm run build:admin
       - run: npm run build:lp
+      - run: rm ./projects/web/src/environments/environment.production.ts
       - run: npm ci
         working-directory: ./functions
       - run: npm run build
