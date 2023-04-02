@@ -29,8 +29,15 @@ jobs:
     name: Web Angular E2E
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [16.x]
+        containers: [1, 2]
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
@@ -40,6 +47,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             package-lock.json
+            functions/package-lock.json
 
       - name: Create environment file's directory
         run: mkdir -p ./projects/web/src/environments
@@ -53,7 +61,29 @@ jobs:
         run: echo $ANGULAR_WEB_ENVIRONMENT | base64 --decode --ignore-garbage > ./projects/web/src/environments/environment.development.ts
 
       - run: npm ci
-      - run: npm run e2e:web:ci
+      - run: npm ci
+        working-directory: ./functions
+
+      - name: Create emulator data directory
+        run: mkdir -p functions/emulator/
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: projects/46488998501/locations/global/workloadIdentityPools/github-actions/providers/github
+          service_account: github-actions-service-account@symbol-social-wallet-test.iam.gserviceaccount.com
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run start:web, npm --prefix ./functions run build:watch, npm --prefix ./functions run emulate
+          wait-on: 'http://localhost:4200, http://localhost:4000'
+          record: true
+          parallel: true
+          config-file: ./projects/web/cypress.config.ts
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: rm ./projects/web/src/environments/environment.development.ts
 
   admin-angular-test:
     name: Admin Angular Test
