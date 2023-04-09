@@ -1,22 +1,60 @@
-import { ComponentFixture } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { render, screen } from '@testing-library/angular';
+import { render } from '@testing-library/angular';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { createRandomAuthUserCredential } from '../../services/auth/auth.mock';
 
-describe('HomeComponent', () => {
+let authServiceSpy: jasmine.SpyObj<AuthService>;
+let routerSpy: jasmine.SpyObj<Router>;
+const homeComponentRenderHelper = async () => {
+  return await render(HomeComponent, {
+    providers: [
+      { provide: AuthService, useValue: authServiceSpy },
+      { provide: Router, useValue: routerSpy },
+    ],
+  });
+};
+
+describe('PageHomeComponent', () => {
   let component: HomeComponent;
-  let fixture: ComponentFixture<HomeComponent>;
 
   beforeEach(async () => {
-    const renderResult = await render(HomeComponent, {});
-    fixture = renderResult.fixture;
-    component = fixture.componentInstance;
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['getRedirectResult']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
   });
 
-  it('should create the app', () => {
+  it('should create', async () => {
+    // Arrange
+    const { fixture } = await homeComponentRenderHelper();
+
+    // Act
+    component = fixture.componentInstance;
+
+    // Assert
     expect(component).toBeTruthy();
   });
 
-  it('should render title', () => {
-    expect(screen.getByText('home works!')).toBeTruthy();
+  it('should navigate to user page if user credential exists', async () => {
+    // Arrange
+    const expectedUser = createRandomAuthUserCredential();
+    const expectedUserId = expectedUser.user.uid;
+    authServiceSpy.getRedirectResult.and.returnValue(Promise.resolve(expectedUser));
+
+    // Act
+    await homeComponentRenderHelper();
+
+    // Assert
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['users', expectedUserId]);
+  });
+
+  it('should not navigate if user credential is null', async () => {
+    // Arrange
+    authServiceSpy.getRedirectResult.and.returnValue(Promise.resolve(null));
+
+    // Act
+    await homeComponentRenderHelper();
+
+    // Assert
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
   });
 });
