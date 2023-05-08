@@ -1,6 +1,6 @@
 import { AuthService } from '../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { createRandomAuthUser } from '../services/auth/auth.mock';
 import { AuthGuard } from './auth.guard';
 
@@ -24,14 +24,11 @@ describe('AuthGuard', () => {
     authServiceSpy.fetchAuthState$.and.returnValue(of(null));
 
     // Act
-    const user$ = guard.canActivate() as Observable<boolean>;
-
-    // Assert
-    const subscription = user$.subscribe((user) => {
-      expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+    guard.canActivate().subscribe((user) => {
+      // Assert
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/auth/sign-in']);
       expect(user).toBe(false);
     });
-    subscription.unsubscribe;
   });
 
   it('should stay if user is authenticated', async () => {
@@ -40,13 +37,10 @@ describe('AuthGuard', () => {
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
     // Act
-    const user$ = guard.canActivate() as Observable<boolean>;
-
-    // Assert
-    const subscription = user$.subscribe((user) => {
+    guard.canActivate().subscribe((user) => {
+      // Assert
       expect(routerSpy.navigate).not.toHaveBeenCalled;
       expect(user).toBe(true);
     });
-    subscription.unsubscribe;
   });
 });

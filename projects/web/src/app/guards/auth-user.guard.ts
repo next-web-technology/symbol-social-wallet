@@ -8,14 +8,12 @@ import { AuthService } from '../services/auth/auth.service';
 })
 export class AuthUserGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
-  canActivate(
-    route: ActivatedRouteSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean | UrlTree> {
     const userId = route.paramMap.get('userId');
     return this.authService.fetchAuthState$().pipe(
       tap((user) => {
         if (!user) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/auth/sign-in']);
         }
         if (!userId) {
           this.router.navigate(['/']);

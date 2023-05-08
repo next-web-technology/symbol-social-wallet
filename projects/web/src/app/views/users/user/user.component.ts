@@ -7,6 +7,9 @@ import { User } from '../../../services/user/user.type';
   standalone: true,
   imports: [CommonModule],
   template: `
+    <div class="my-10">
+      <h2 class=" text-1xl font-extrabold text-gray-900 md:text-3xl lg:text-4xl ">User</h2>
+    </div>
     <ng-container *ngIf="user; else noValue">
       <h2>User</h2>
       <p>id: {{ user.id }}</p>

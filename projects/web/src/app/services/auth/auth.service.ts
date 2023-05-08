@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserCredential, User } from '@angular/fire/auth';
 import { AuthInfrastructureService } from './auth-infrastructure.service';
+import { Router } from '@angular/router';
 
 export interface AuthInfrastructureServiceInterface {
   signInWithGooglePopup: () => Promise<void>;
@@ -18,8 +19,9 @@ export interface AuthInfrastructureServiceInterface {
 export class AuthService {
   private authInfrastructureServiceInterface: AuthInfrastructureServiceInterface;
 
-  constructor(authInfrastructureService: AuthInfrastructureService) {
+  constructor(authInfrastructureService: AuthInfrastructureService, private router: Router) {
     this.authInfrastructureServiceInterface = authInfrastructureService;
+    this.router = router;
   }
 
   async signInWithGooglePopup(): Promise<void> {

@@ -2,10 +2,12 @@ import { AuthService } from './auth.service';
 import { AuthInfrastructureService } from './auth-infrastructure.service';
 import { of } from 'rxjs';
 import { createRandomAuthUserCredential, createRandomAuthUser } from './auth.mock';
+import { Router } from '@angular/router';
 
 describe('AuthService', () => {
   let service: AuthService;
   let authInfrastructureServiceSpy: jasmine.SpyObj<AuthInfrastructureService>;
+  let routerSpy: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
     authInfrastructureServiceSpy = jasmine.createSpyObj('AuthInfrastructureService', [
@@ -16,7 +18,7 @@ describe('AuthService', () => {
       'isSignIn',
       'fetchAuthState$',
     ]);
-    service = new AuthService(authInfrastructureServiceSpy);
+    service = new AuthService(authInfrastructureServiceSpy, routerSpy);
   });
 
   it('should be created', () => {

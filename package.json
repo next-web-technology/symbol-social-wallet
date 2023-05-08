@@ -31,7 +31,8 @@
     "test:lp:ci": "ng test --project=lp --browsers=ChromeHeadless --no-watch --no-progress --code-coverage",
     "e2e:lp": "ng run lp:cypress-open",
     "e2e:lp:ci": "ng run lp:cypress-run",
-    "lint:lp": "ng lint --project=lp"
+    "lint:lp": "ng lint --project=lp",
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -48,10 +49,15 @@
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "crypto-browserify": "^3.12.0",
     "firebase": "^9.17.2",
     "rxjs": "~7.8.0",
+    "stream-browserify": "^3.0.0",
+    "symbol-hd-wallets": "^0.14.2",
+    "symbol-qr-library": "^0.14.2",
+    "symbol-sdk": "^2.0.4",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "^0.12.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.1.4",
@@ -81,10 +87,14 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "patch-package": "^7.0.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "tailwindcss": "^3.2.6",
     "type-predicates-generator": "^0.3.2",
     "typescript": "~4.9.4"
+  },
+  "volta": {
+    "node": "16.20.0"
   }
 }
