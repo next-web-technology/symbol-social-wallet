@@ -11,6 +11,22 @@ service cloud.firestore {
         allow update: if request.auth != null && request.auth.uid == userId;
         allow delete: if false;
       }
+
+      match /users/{userId}/accounts {
+        allow get: if request.auth != null && request.auth.uid == userId;
+        allow list: if false;
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow update: if request.auth != null && request.auth.uid == userId;
+        allow delete: if false;
+      }
+
+      match /users/{userId}/accounts/{accountId} {
+        allow get: if request.auth != null && request.auth.uid == userId;
+        allow list: if false;
+        allow create: if request.auth != null && request.auth.uid == userId;
+        allow update: if request.auth != null && request.auth.uid == userId;
+        allow delete: if false;
+      }
     }
   }
 }

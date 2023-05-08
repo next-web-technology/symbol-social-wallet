@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult as firebaseGetRedirectResult,
-  signOut as firebaseSignOut,
+  signOut,
   authState,
   UserCredential,
   User,
@@ -36,7 +36,7 @@ export class AuthInfrastructureService implements AuthInfrastructureServiceInter
   }
 
   async signOut(): Promise<void> {
-    await firebaseSignOut(this.afAuth);
+    await signOut(this.afAuth);
   }
 
   isSignIn(): boolean {
@@ -50,8 +50,8 @@ export class AuthInfrastructureService implements AuthInfrastructureServiceInter
         if (!user) {
           return;
         }
-      }),
-      map((user) => user)
+        return user;
+      })
     );
   }
 }

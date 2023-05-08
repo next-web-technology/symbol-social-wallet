@@ -10,26 +10,24 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   template: `
-    <button class="btn btn-square btn-ghost flex flex-row justify-start gap-2 w-full" (click)="signOut()">
-      <fa-icon [icon]="faRightFromBracket"></fa-icon>
-      <span>{{ labelText }}</span>
-    </button>
+    <li>
+      <a class="btn btn-ghost flex flex-row justify-start" (click)="signOut()">
+        <fa-icon [icon]="faRightFromBracket"></fa-icon>
+        <span>SIGN OUT</span>
+      </a>
+    </li>
   `,
   styles: [],
 })
 export class SignOutButtonComponent {
-  @Input() labelText: string;
-
   faRightFromBracket = faRightFromBracket;
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.labelText = 'Sign out';
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   async signOut(): Promise<void> {
     const subscription = this.authService.fetchAuthState$().subscribe((authUser) => {
       if (authUser === null) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/auth/sign-in']);
         subscription.unsubscribe();
       }
     });

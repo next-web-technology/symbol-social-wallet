@@ -22,12 +22,25 @@
             "outputPath": "dist/web",
             "index": "projects/web/src/index.html",
             "main": "projects/web/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js",
+              "projects/web/src/polyfills.ts"
+            ],
             "tsConfig": "projects/web/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/web/src/favicon.ico", "projects/web/src/assets"],
-            "styles": ["projects/web/src/styles.scss"],
-            "scripts": []
+            "assets": [
+              "projects/web/src/favicon.ico",
+              "projects/web/src/assets"
+            ],
+            "styles": [
+              "projects/web/src/styles.scss"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "symbol-sdk",
+              "symbol-hd-wallets",
+              "symbol-qr-library"
+            ]
           },
           "configurations": {
             "production": {
@@ -130,18 +143,30 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing",
+              "projects/web/src/polyfills.ts"
+            ],
             "tsConfig": "projects/web/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/web/src/favicon.ico", "projects/web/src/assets"],
-            "styles": ["projects/web/src/styles.scss"],
+            "assets": [
+              "projects/web/src/favicon.ico",
+              "projects/web/src/assets"
+            ],
+            "styles": [
+              "projects/web/src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/web/**/*.ts", "projects/web/**/*.html"]
+            "lintFilePatterns": [
+              "projects/web/**/*.ts",
+              "projects/web/**/*.html"
+            ]
           }
         },
         "cypress-run": {
@@ -212,11 +237,18 @@
             "outputPath": "dist/admin",
             "index": "projects/admin/src/index.html",
             "main": "projects/admin/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/admin/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/admin/src/favicon.ico", "projects/admin/src/assets"],
-            "styles": ["projects/admin/src/styles.scss"],
+            "assets": [
+              "projects/admin/src/favicon.ico",
+              "projects/admin/src/assets"
+            ],
+            "styles": [
+              "projects/admin/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -268,18 +300,29 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "projects/admin/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/admin/src/favicon.ico", "projects/admin/src/assets"],
-            "styles": ["projects/admin/src/styles.scss"],
+            "assets": [
+              "projects/admin/src/favicon.ico",
+              "projects/admin/src/assets"
+            ],
+            "styles": [
+              "projects/admin/src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/admin/**/*.ts", "projects/admin/**/*.html"]
+            "lintFilePatterns": [
+              "projects/admin/**/*.ts",
+              "projects/admin/**/*.html"
+            ]
           }
         },
         "cypress-run": {
@@ -350,11 +393,18 @@
             "outputPath": "dist/lp",
             "index": "projects/lp/src/index.html",
             "main": "projects/lp/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "projects/lp/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/lp/src/favicon.ico", "projects/lp/src/assets"],
-            "styles": ["projects/lp/src/styles.scss"],
+            "assets": [
+              "projects/lp/src/favicon.ico",
+              "projects/lp/src/assets"
+            ],
+            "styles": [
+              "projects/lp/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -406,18 +456,29 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "projects/lp/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["projects/lp/src/favicon.ico", "projects/lp/src/assets"],
-            "styles": ["projects/lp/src/styles.scss"],
+            "assets": [
+              "projects/lp/src/favicon.ico",
+              "projects/lp/src/assets"
+            ],
+            "styles": [
+              "projects/lp/src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/lp/**/*.ts", "projects/lp/**/*.html"]
+            "lintFilePatterns": [
+              "projects/lp/**/*.ts",
+              "projects/lp/**/*.html"
+            ]
           }
         },
         "cypress-run": {
@@ -471,6 +532,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics", "@schematics/angular"]
+    "schematicCollections": [
+      "@angular-eslint/schematics",
+      "@schematics/angular"
+    ]
   }
 }

@@ -1,13 +1,13 @@
-import { TestBed } from '@angular/core/testing';
-
 import { AuthInfrastructureService } from './auth-infrastructure.service';
+import { Auth } from '@angular/fire/auth';
 
-xdescribe('AuthInfrastructureService', () => {
+describe('AccountInfrastructureService', () => {
   let service: AuthInfrastructureService;
+  let authSpy: jasmine.SpyObj<Auth>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AuthInfrastructureService);
+    authSpy = jasmine.createSpyObj('Auth', ['currentUser']);
+    service = new AuthInfrastructureService(authSpy);
   });
 
   it('should be created', () => {

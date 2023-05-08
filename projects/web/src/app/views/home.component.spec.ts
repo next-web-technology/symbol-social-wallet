@@ -15,6 +15,6 @@ describe('ViewHomeComponent', () => {
   });
 
   it('should render', () => {
-    expect(screen.getByText('home works!')).toBeTruthy();
+    expect(screen.getByText('Hello there')).toBeTruthy();
   });
 });

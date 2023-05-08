@@ -2,7 +2,7 @@ import { ComponentFixture } from '@angular/core/testing';
 import { AuthService } from '../../../services/auth/auth.service';
 import { render, screen, RenderResult, fireEvent } from '@testing-library/angular';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SignOutButtonComponent } from './sign-out-button.component';
+import { SignOutButtonComponent } from './sign-out.component';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { createRandomAuthUser } from '../../../services/auth/auth.mock';
@@ -24,7 +24,6 @@ describe('SignOutButtonComponent', () => {
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy },
       ],
-      componentProperties: { labelText: 'Sign out' },
     });
     fixture = renderResult.fixture;
     component = fixture.componentInstance;
@@ -35,21 +34,9 @@ describe('SignOutButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render the label text', () => {
-    // Arrange
-    const labelText = 'test';
-    component.labelText = labelText;
-
-    // Act
-    fixture.autoDetectChanges();
-
-    // Assert
-    expect(screen.getByText(labelText)).toBeTruthy();
-  });
-
   it('should call signOut method when the button is clicked', async () => {
     // Arrange
-    const button = renderResult.getByText('Sign out');
+    const button = renderResult.getByText('SIGN OUT');
     const expectedUser = createRandomAuthUser();
     authServiceSpy.fetchAuthState$.and.returnValue(of(expectedUser));
 
@@ -63,13 +50,13 @@ describe('SignOutButtonComponent', () => {
 
   it('should navigate to route when authUser is null', async () => {
     // Arrange
-    const button = renderResult.getByText('Sign out');
+    const button = renderResult.getByText('SIGN OUT');
     authServiceSpy.fetchAuthState$.and.returnValue(of(null));
 
     // Act
     await fireEvent.click(button);
 
     // Assert
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/auth/sign-in']);
   });
 });
